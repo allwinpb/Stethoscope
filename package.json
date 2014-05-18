@@ -1,5 +1,5 @@
 {
-  "name": "node-process-monitor",
+  "name": "stethoscope",
   "version": "0.0.0",
   "description": "",
   "main": "app.js",

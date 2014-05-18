@@ -8,5 +8,5 @@ module.exports = function(){
 	}else if(os.platform() == 'osx'){
 		engine = require('./engines/osx.js')
 	}
-	return engine;
+	return engine();
 }

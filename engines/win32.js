@@ -9,7 +9,6 @@ function sanitize(input){
 
 function update(){
 	if(safeToUpdate <= 0){
-		console.log('Updating');
 		safeToUpdate = 2;
 		cmd("wmic cpu get loadpercentage", function(error, stdout, stderr){
 			monitor.cpuPercentage = parseInt(sanitize(stdout));
@@ -17,7 +16,7 @@ function update(){
 		});
 		cmd("wmic os get freephysicalmemory", function(error, stdout, stderr){
 			monitor.ramFree = parseInt(sanitize(stdout));
-			monitor.ramPercentage = monitor.ramFree / monitor.ramMax;
+			monitor.ramPercentage = 1 - monitor.ramFree / monitor.ramMax;
 			safeToUpdate -= 1;
 		});
 	}
@@ -40,4 +39,6 @@ function init(){
 }
 
 init();
-module.exports = monitor;
+module.exports = function(){
+	return monitor;
+}
