@@ -1,10 +1,9 @@
-var app = require("express")();
+var express = require("express");
+var app = express();
 var os = require("./stats.js")();
 
 app.route('/').get(function(req,res,err){
 	res.send(JSON.stringify(os));
 });
-app.route('/client').get(function(req,res,err){
-	res.sendfile('./client.html');
-})
+app.use('/client',express.static(__dirname+'/client'));
 app.listen(8000)
