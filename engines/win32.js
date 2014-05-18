@@ -16,7 +16,7 @@ function update(){
 		});
 		cmd("wmic os get freephysicalmemory", function(error, stdout, stderr){
 			monitor.ramFree = parseInt(sanitize(stdout));
-			monitor.ramPercentage = 1 - monitor.ramFree / monitor.ramMax;
+			monitor.ramPercentage = (1 - monitor.ramFree / monitor.ramMax)*100;
 			safeToUpdate -= 1;
 		});
 	}
