@@ -45,8 +45,8 @@
 					data.diskPercentage = data.diskPercentage.toFixed(1)
 					data.ramFree = (data.ramFree/(1024*1024)).toFixed(1)
 					data.ramMax = (data.ramMax/(1024*1024)).toFixed(1)
-					data.diskFree = (data.diskFree/(1073741824)).toFixed(1)
-					data.diskMax = (data.diskMax/(1073741824)).toFixed(1)
+					data.diskFree = (data.diskFree/(1024*1024)).toFixed(1)
+					data.diskMax = (data.diskMax/(1024*1024)).toFixed(1)
 					$('#cpuPercentage').text(data.cpuPercentage);
 					$('#ramPercentage').text(data.ramPercentage + "% used ("+data.ramFree+" GB out of "+data.ramMax+" GB free)");
 					$('#diskPercentage').text(data.diskPercentage + "% used ("+data.diskFree+" GB out of "+data.diskMax+" GB free)");

@@ -20,7 +20,7 @@ function update(){
 			safeToUpdate -= 1;
 		});
 		cmd("wmic logicaldisk get freespace", function(error, stdout, stderr){
-			monitor.diskFree = parseInt(sanitize(stdout));
+			monitor.diskFree = parseInt(sanitize(stdout)/1024);
 			monitor.diskPercentage = (1 - monitor.diskFree / monitor.diskMax)*100;
 			safeToUpdate -= 1;
 		});
@@ -33,7 +33,7 @@ function setup(){
 		monitor.ramMax = parseInt(sanitize(stdout));
 	});
 	cmd("wmic logicaldisk get size", function(error, stdout, stderr){
-		monitor.diskMax = parseInt(sanitize(stdout));
+		monitor.diskMax = parseInt(sanitize(stdout)/1024);
 	});
 }
 
