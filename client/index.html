@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Bootstrap 101 Template</title>
+	<title>Stethoscope Client</title>
 
 	<!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -25,6 +25,9 @@
 		<h3><strong>RAM</strong></h3>
 		<h2 id="ramPercentage">0</h2>
 		<br>
+		<h3><strong>Disk</strong></h3>
+		<h2 id="diskPercentage">0</h2>
+		<br>
 	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery.min.js"></script>
@@ -36,12 +39,17 @@
 				url:'/',
 				success: function(data){
 					data = JSON.parse(data)
+					console.log(data)
 					data.ramPercentage = data.ramPercentage.toFixed(1)
 					data.cpuPercentage = data.cpuPercentage.toFixed(1)
+					data.diskPercentage = data.diskPercentage.toFixed(1)
 					data.ramFree = (data.ramFree/(1024*1024)).toFixed(1)
 					data.ramMax = (data.ramMax/(1024*1024)).toFixed(1)
+					data.diskFree = (data.diskFree/(1073741824)).toFixed(1)
+					data.diskMax = (data.diskMax/(1073741824)).toFixed(1)
 					$('#cpuPercentage').text(data.cpuPercentage);
 					$('#ramPercentage').text(data.ramPercentage + "% used ("+data.ramFree+" GB out of "+data.ramMax+" GB free)");
+					$('#diskPercentage').text(data.diskPercentage + "% used ("+data.diskFree+" GB out of "+data.diskMax+" GB free)");
 				}
 			})
 		},1000)

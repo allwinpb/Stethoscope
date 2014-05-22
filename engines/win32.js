@@ -9,7 +9,7 @@ function sanitize(input){
 
 function update(){
 	if(safeToUpdate <= 0){
-		safeToUpdate = 2;
+		safeToUpdate = 3;
 		cmd("wmic cpu get loadpercentage", function(error, stdout, stderr){
 			monitor.cpuPercentage = parseInt(sanitize(stdout));
 			safeToUpdate -= 1;
@@ -19,12 +19,21 @@ function update(){
 			monitor.ramPercentage = (1 - monitor.ramFree / monitor.ramMax)*100;
 			safeToUpdate -= 1;
 		});
+		cmd("wmic logicaldisk get freespace", function(error, stdout, stderr){
+			monitor.diskFree = parseInt(sanitize(stdout));
+			monitor.diskPercentage = (1 - monitor.diskFree / monitor.diskMax)*100;
+			safeToUpdate -= 1;
+		});
+
 	}
 }
 
 function setup(){
 	cmd("wmic os get totalvisiblememorysize", function(error, stdout, stderr){
 		monitor.ramMax = parseInt(sanitize(stdout));
+	});
+	cmd("wmic logicaldisk get size", function(error, stdout, stderr){
+		monitor.diskMax = parseInt(sanitize(stdout));
 	});
 }
 
@@ -33,6 +42,9 @@ function init(){
 	monitor.ramFree = 0;
 	monitor.ramMax = 1;
 	monitor.ramPercentage = 0;
+	monitor.diskFree = 0;
+	monitor.diskMax = 1;
+	monitor.diskPercentage = 0;
 	setup();
 	setInterval(update,1000);
 	update();
