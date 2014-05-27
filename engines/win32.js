@@ -28,15 +28,6 @@ function update(){
 	}
 }
 
-function setup(){
-	cmd("wmic os get totalvisiblememorysize", function(error, stdout, stderr){
-		monitor.ramMax = parseInt(sanitize(stdout));
-	});
-	cmd("wmic logicaldisk get size", function(error, stdout, stderr){
-		monitor.diskMax = parseInt(sanitize(stdout)/1024);
-	});
-}
-
 function init(){
 	monitor.cpuPercentage = 0;
 	monitor.ramFree = 0;
@@ -45,7 +36,12 @@ function init(){
 	monitor.diskFree = 0;
 	monitor.diskMax = 1;
 	monitor.diskPercentage = 0;
-	setup();
+	cmd("wmic os get totalvisiblememorysize", function(error, stdout, stderr){
+		monitor.ramMax = parseInt(sanitize(stdout));
+	});
+	cmd("wmic logicaldisk get size", function(error, stdout, stderr){
+		monitor.diskMax = parseInt(sanitize(stdout)/1024);
+	});
 	setInterval(update,1000);
 	update();
 }
